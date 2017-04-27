@@ -1,8 +1,11 @@
       $("#submit").on("click", function(event) {
 
+        $("#photo").empty();
+
         // event.preventDefault() can be used to prevent an event's default behavior.
         // Here, it prevents the submit button from trying to submit a form when clicked
         event.preventDefault();
+
 
         // Here we grab the text from the input box
         var artistGiph = $("#artist-input").val();
@@ -26,8 +29,9 @@
           artistImage.attr("data-still", response.data[0].images.fixed_height_still.url);
           artistImage.attr("data-state", "animate"); // set the image state
           artistImage.addClass("gif");
+          $("#photo").empty();
 
-          $("#photo").append(artistImage);
+          $("#photo").html(artistImage);
 
         });
 

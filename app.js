@@ -2,6 +2,50 @@ $(document).ready(function() {
 
 
 
+  var list = JSON.parse(localStorage.getItem("favorites-list"));
+
+  console.log(list);
+
+if (!Array.isArray(list)) {
+      list = [];
+    }
+
+    function makeFavorites() {
+
+      $(".faves").empty();
+
+      var insideList = JSON.parse(localStorage.getItem("favorites-list"));
+
+      // Checks to see if we have any todos in localStorage
+      // If we do, set the local insideList variable to our todos
+      // Otherwise set the local insideList variable to an empty array
+      if (!Array.isArray(insideList)) {
+        insideList = [];
+      }
+
+  
+      for (var i = 0; i < insideList.length; i++) {
+        var f = $("<button>").html(insideList[i]);
+        $(".faves").append(f);
+      }
+    }
+
+    // render our todos on page load
+   
+
+
+    $(".heart").on("click", function(event) {
+      event.preventDefault();
+      // Setting the input value to a variable and then clearing the input
+      var artistname = $("#artist-input").val();
+      list.push(artistname);
+      localStorage.setItem("favorites-list", JSON.stringify(list));
+      console.log(artistname);
+      makeFavorites();
+
+    });
+    makeFavorites();
+
 	//spotify search function
 	function getArtistTrack(artist) {
 
@@ -66,6 +110,12 @@ $(document).ready(function() {
   });
 
 
+
+  $("#artist-input").on("click", function() {
+  this.value = "";
+});
+
+
       $("#submit").on("click", function(event) {
 
         // event.preventDefault() can be used to prevent an event's default behavior.
@@ -95,7 +145,7 @@ $(document).ready(function() {
           artistImage.attr("data-state", "animate"); // set the image state
           artistImage.addClass("gif");
 
-          $("#photo").append(artistImage);
+          $("#photo").html(artistImage);
 
         });
 
@@ -119,5 +169,10 @@ $(document).ready(function() {
     });
 
 
+ 
 
 });
+
+
+
+
