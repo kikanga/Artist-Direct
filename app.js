@@ -49,6 +49,8 @@ if (!Array.isArray(list)) {
 
     makeFavorites();
 
+
+
 	//spotify search function/////////////////////////////////////////////////////////
 	function getArtistTrack(artist) {
 
@@ -88,6 +90,15 @@ if (!Array.isArray(list)) {
      }).done(function(genreResponse) {
      	var genre = genreResponse.genres[0] + "," + genreResponse.genres[1] + "," + genreResponse.genres[2];
      	$("#profile").append("</br>" + "Genre: " + genre);
+
+      var photoURL = genreResponse.images[2].url;
+
+      var artistphoto = $("<img>");
+
+      artistphoto.attr("src", photoURL);
+
+      $("#photo").html(artistphoto);
+
      });
 
      var follow = '<iframe src="https://embed.spotify.com/follow/1/?uri=spotify:artist:'
@@ -104,42 +115,42 @@ if (!Array.isArray(list)) {
 });
 
 //giphy function/////////////////////////////////////////////////////////////////////////
-        function getGiphy() {
-        var artistGiph = $("#artist-input").val().toLowerCase().trim();
+//         function getGiphy() {
+//         var artistGiph = $("#artist-input").val().toLowerCase().trim();
         
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-        artistGiph + "&api_key=dc6zaTOxFJmzC&limit=1";
+//         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+//         artistGiph + "&api_key=dc6zaTOxFJmzC&limit=1";
 
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-          var results = response.data[0].images.fixed_height.url;
-          var artistImage = $("<img>");
-          console.log(response.data);
+//         $.ajax({
+//           url: queryURL,
+//           method: "GET"
+//         }).done(function(response) {
+//           var results = response.data[0].images.fixed_height.url;
+//           var artistImage = $("<img>");
+//           console.log(response.data);
 
-          artistImage.attr("src", results);
-          artistImage.attr("data-animate", results);
-          artistImage.attr("data-still", response.data[0].images.fixed_height_still.url);
-          artistImage.attr("data-state", "animate"); // set the image state
-          artistImage.addClass("gif");
+//           artistImage.attr("src", results);
+//           artistImage.attr("data-animate", results);
+//           artistImage.attr("data-still", response.data[0].images.fixed_height_still.url);
+//           artistImage.attr("data-state", "animate"); // set the image state
+//           artistImage.addClass("gif");
 
-          $("#photo").html(artistImage);
+//           $("#photo").html(artistImage);
 
-        });
+//         });
 
-      };
-//pause and play click function for gifs
-  $(document).on("click", ".gif", function(){
-      var state = $(this).attr("data-state");
-      if (state === "animate") {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-      } else {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-      }
-    });
+//       };
+// //pause and play click function for gifs
+//   $(document).on("click", ".gif", function(){
+//       var state = $(this).attr("data-state");
+//       if (state === "animate") {
+//         $(this).attr("src", $(this).attr("data-still"));
+//         $(this).attr("data-state", "still");
+//       } else {
+//         $(this).attr("src", $(this).attr("data-animate"));
+//         $(this).attr("data-state", "animate");
+//       }
+//     });
 
   //Get tour dates////////////////////////////////////////////////////
 
@@ -199,7 +210,7 @@ if (!Array.isArray(list)) {
     console.log(artist);
     getArtistTrack(artist);
     getEvents(artist);
-    getGiphy();
+    // getGiphy();
 
  $(document).on("click", ".favorite-button", function(){
      event.preventDefault();
@@ -223,7 +234,7 @@ if (!Array.isArray(list)) {
     console.log("empty");
     getEvents(artist);
     console.log("empty");
-    getGiphy();
+    // getGiphy();
       
 
 
