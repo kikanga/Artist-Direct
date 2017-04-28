@@ -8,3 +8,6 @@ $("#button").on("click",function(){
  
 
 });
+$(document).ready(function(){
+	$("#search").lettering();
+})
