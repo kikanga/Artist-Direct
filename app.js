@@ -1,39 +1,26 @@
+
 $(document).ready(function() {
 
 
-
+//Favorites List/////////////////////////////////////////////////////////////////// 
   var list = JSON.parse(localStorage.getItem("favorites-list"));
-
-  console.log(list);
-
 if (!Array.isArray(list)) {
       list = [];
     }
-
     function makeFavorites() {
-
       $(".faves").empty();
-
       var insideList = JSON.parse(localStorage.getItem("favorites-list"));
-
-      // Checks to see if we have any todos in localStorage
-      // If we do, set the local insideList variable to our todos
-      // Otherwise set the local insideList variable to an empty array
       if (!Array.isArray(insideList)) {
         insideList = [];
       }
-
-  
       for (var i = 0; i < insideList.length; i++) {
         var f = $("<button>").html(insideList[i]);
+        f.addClass("favorite-button");
         $(".faves").append(f);
       }
     }
-
-    // render our todos on page load
    
-
-
+    //On click for creating favorites
     $(".heart").on("click", function(event) {
       event.preventDefault();
       // Setting the input value to a variable and then clearing the input
@@ -42,11 +29,10 @@ if (!Array.isArray(list)) {
       localStorage.setItem("favorites-list", JSON.stringify(list));
       console.log(artistname);
       makeFavorites();
-
     });
     makeFavorites();
 
-	//spotify search function
+	//spotify search function/////////////////////////////////////////////////////////
 	function getArtistTrack(artist) {
 
     var queryURL = "https://api.spotify.com/v1/search?q=" + artist + "&type=artist";
@@ -86,50 +72,23 @@ if (!Array.isArray(list)) {
 
      var follow = '<iframe src="https://embed.spotify.com/follow/1/?uri=spotify:artist:'
      + artistID + '&size=detail&theme=light&show-count=0" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>'
-     $('#profile').append("<br>" + follow);
-
-     
+     $('#profile').append("<br>" + follow); 
 
     });
   }
 
-  
- 
-  $("#submit").on("click", function(event) {
-    event.preventDefault();
-    $("#player").empty();
-    $("#profile").empty();
 
-    $("#spotify-header").html("Top Songs");
-    //brings up spotify top songs
-    var artist = $("#artist-input").val().trim();
-    getArtistTrack(artist);
-
-
-
-  });
-
-
-
+//empties out the text box when user clicks it////////////////////////////////////////////
   $("#artist-input").on("click", function() {
   this.value = "";
 });
 
-
-      $("#submit").on("click", function(event) {
-
-        // event.preventDefault() can be used to prevent an event's default behavior.
-        // Here, it prevents the submit button from trying to submit a form when clicked
-        event.preventDefault();
-
-        // Here we grab the text from the input box
+//giphy function/////////////////////////////////////////////////////////////////////////
+        function getGiphy() {
         var artistGiph = $("#artist-input").val();
-
-        // Here we construct our URL
-      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
         artistGiph + "&api_key=dc6zaTOxFJmzC&limit=1";
-
-        // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
 
         $.ajax({
           url: queryURL,
@@ -149,16 +108,10 @@ if (!Array.isArray(list)) {
 
         });
 
-        // -----------------------------------------------------------------------
-
-      });
-
+      };
+//pause and play click function for gifs
   $(document).on("click", ".gif", function(){
-      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
       var state = $(this).attr("data-state");
-      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-      // Then, set the image's data-state to animate
-      // Else set src to the data-still value
       if (state === "animate") {
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
@@ -169,9 +122,36 @@ if (!Array.isArray(list)) {
     });
 
 
- 
+//Submit Button runs all AJAX functions 
+  $("#submit").on("click", function(submit) {
+    submit.preventDefault();
+    $("#player").empty();
+    $("#profile").empty();
+    $("#spotify-header").html("Top Songs");
+    var artist = $("#artist-input").val().trim();
+    getArtistTrack(artist);
+    getGiphy();
+
+ $(document).on("click", ".favorite-button", function(){
+     event.preventDefault();
+    $("#player").empty();
+    $("#profile").empty();
+    $("#spotify-header").html("Top Songs");
+    faveArtist = $(this).text();
+    $("#artist-input").val(faveArtist);
+    var artist = $("#artist-input").val().trim();
+    getArtistTrack(artist);
+    getGiphy();
+      
+
+
+
+  }); 
 
 });
+
+});
+
 
 
 
