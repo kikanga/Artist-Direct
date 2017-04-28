@@ -1,6 +1,9 @@
 
 $(document).ready(function() {
 
+var artist = $("#artist-input").val().toLowerCase().trim();
+
+console.log(artist);
 
 //Favorites List/////////////////////////////////////////////////////////////////// 
   var list = JSON.parse(localStorage.getItem("favorites-list"));
@@ -14,26 +17,43 @@ if (!Array.isArray(list)) {
         insideList = [];
       }
       for (var i = 0; i < insideList.length; i++) {
+
+    
+
         var f = $("<button>").html(insideList[i]);
         f.addClass("favorite-button");
         $(".faves").append(f);
       }
-    }
+    };
+
+    
    
     //On click for creating favorites
     $(".heart").on("click", function(event) {
       event.preventDefault();
       // Setting the input value to a variable and then clearing the input
-      var artistname = $("#artist-input").val();
+
+      var artistname = $("#artist-input").val().toLowerCase().trim();
+   
+      if (list.indexOf(artistname) == -1) {
       list.push(artistname);
       localStorage.setItem("favorites-list", JSON.stringify(list));
       console.log(artistname);
       makeFavorites();
+    };
+
     });
+  
+
+
+
     makeFavorites();
 
 	//spotify search function/////////////////////////////////////////////////////////
 	function getArtistTrack(artist) {
+
+    $("#player").empty();
+    $("#profile").empty();
 
     var queryURL = "https://api.spotify.com/v1/search?q=" + artist + "&type=artist";
     $.ajax({
@@ -85,7 +105,7 @@ if (!Array.isArray(list)) {
 
 //giphy function/////////////////////////////////////////////////////////////////////////
         function getGiphy() {
-        var artistGiph = $("#artist-input").val();
+        var artistGiph = $("#artist-input").val().toLowerCase().trim();
         
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
         artistGiph + "&api_key=dc6zaTOxFJmzC&limit=1";
@@ -121,26 +141,88 @@ if (!Array.isArray(list)) {
       }
     });
 
+  //Get tour dates////////////////////////////////////////////////////
+
+  function getEvents(artist) {
+
+    // Running an initial search to identify the artist's unique Spotify id
+     // artist = artist.replace(" ", "+");
+     var queryURL2 = "http://api.eventful.com/json/events/search?keywords=" + artist + "+music&where=34.0522,-118.2437&within=25&sort_order=popularity&date=Future&app_key=6Gn8mQPcGM5pV65S";
+    
+    $.ajax({
+      url: queryURL2,
+      dataType: 'jsonp',
+      method: "GET"
+    }).done(function(response) {
+
+      var results = response.events.event
+
+      console.log(results);
+
+      // Printing the entire object to console
+      for (var i = 0; i < results.length; i++) {
+     
+      var printout = results[i].title;
+      var date = results[i].start_time;
+      var dateformatted =  moment(date).format('MMMM Do YYYY, h:mm a');
+      var name = results[i].venue_name;
+      var address = results[i].venue_address;
+      var url = results[i].url
+      var individualResultDiv = $("<a>");
+
+      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+      individualResultDiv.append(printout)
+      individualResultDiv.append(" / " + name)
+      individualResultDiv.append(" / " + address)
+      individualResultDiv.append(" / " + dateformatted + "</p>")
+      individualResultDiv.addClass(".individualResult");
+      individualResultDiv.attr("href", url)
+        $("#dates").append(individualResultDiv)
+        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+
+      }
+
+    });
+
+  };
+
 
 //Submit Button runs all AJAX functions 
   $("#submit").on("click", function(submit) {
     submit.preventDefault();
     $("#player").empty();
     $("#profile").empty();
+    $("#dates").empty();
     $("#spotify-header").html("Top Songs");
-    var artist = $("#artist-input").val().trim();
+    $("#tour-header").html("Upcoming Shows");
+    var artist = $("#artist-input").val().toLowerCase().trim();
+    console.log(artist);
     getArtistTrack(artist);
+    getEvents(artist);
     getGiphy();
 
  $(document).on("click", ".favorite-button", function(){
      event.preventDefault();
     $("#player").empty();
+    console.log("1");
     $("#profile").empty();
+    console.log("2");
+    $("#dates").empty();
+    console.log("3");
     $("#spotify-header").html("Top Songs");
+    console.log("4");
+    $("#tour-header").html("Upcoming Shows");
+    console.log("empty");
     faveArtist = $(this).text();
+    console.log("empty");
     $("#artist-input").val(faveArtist);
-    var artist = $("#artist-input").val().trim();
+    console.log("empty");
+    var artist = $("#artist-input").val().toLowerCase().trim();
+    console.log("empty");
     getArtistTrack(artist);
+    console.log("empty");
+    getEvents(artist);
+    console.log("empty");
     getGiphy();
       
 
@@ -151,6 +233,12 @@ if (!Array.isArray(list)) {
 });
 
 });
+
+
+
+
+  
+
 
 
 

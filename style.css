@@ -24,15 +24,33 @@ button {
 
 }
 
+.tour {
+	padding: 70px;
+
+}
+
 .pic {
 	padding-left: 30px;
 	padding-top: 30px;
 }
 
+.dates {
+
+	padding: 30px;
+
+}
 #spotify-header {
 
 	font-size: 24px;
 	text-align: center;
+}
+
+#tour-header {
+
+	font-size: 24px;
+	text-align: center;
+	color: white;
+	
 }
 
 .spotify {
