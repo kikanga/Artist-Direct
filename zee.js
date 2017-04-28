@@ -3,11 +3,8 @@ $("#button").on("click",function(){
   $("#lyrics").empty();
   var song = "migos"; 
   var src = "http://www.lyrics.com/lyrics/"+song;
-  $('<iframe>').attr("src", src).attr("height",300).attr("width",300).appendTo('#lyrics');
+  $('<iframe>').attr("src", src).attr("height",700).attr("width",700).appendTo('#lyrics');
   
  
-
 });
-$(document).ready(function(){
-	$("#search").lettering();
-})
+
