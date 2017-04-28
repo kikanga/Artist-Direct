@@ -1,5 +1,7 @@
 body {
 	background: url("http://cinemacgyver.com/wp-content/uploads/2016/10/b5dKUl.jpg");
+	background-repeat: no-repeat;
+	background-color: black;
 	font-family: 'Open Sans', sans-serif;
 }
 
@@ -22,10 +24,33 @@ button {
 
 }
 
+.tour {
+	padding: 70px;
+
+}
+
+.pic {
+	padding-left: 30px;
+	padding-top: 30px;
+}
+
+.dates {
+
+	padding: 30px;
+
+}
 #spotify-header {
 
 	font-size: 24px;
 	text-align: center;
+}
+
+#tour-header {
+
+	font-size: 24px;
+	text-align: center;
+	color: white;
+	
 }
 
 .spotify {
