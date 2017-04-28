@@ -158,7 +158,7 @@ if (!Array.isArray(list)) {
 
     // Running an initial search to identify the artist's unique Spotify id
      // artist = artist.replace(" ", "+");
-     var queryURL2 = "http://api.eventful.com/json/events/search?keywords=" + artist + "+music&where=34.0522,-118.2437&within=25&sort_order=popularity&date=Future&app_key=6Gn8mQPcGM5pV65S";
+     var queryURL2 = "https://api.eventful.com/json/events/search?keywords=" + artist + "+music&where=34.0522,-118.2437&within=25&sort_order=popularity&date=Future&app_key=6Gn8mQPcGM5pV65S";
     
     $.ajax({
       url: queryURL2,
