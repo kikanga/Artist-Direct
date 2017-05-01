@@ -1,9 +1,8 @@
-
 $(document).ready(function() {
 
+var artist = $("#artist-input").val().toLowerCase().trim();
 
-
-
+console.log(artist);
 
 //Favorites List/////////////////////////////////////////////////////////////////// 
   var list = JSON.parse(localStorage.getItem("favorites-list"));
@@ -38,7 +37,7 @@ if (!Array.isArray(list)) {
       if (list.indexOf(artistname) == -1) {
       list.push(artistname);
       localStorage.setItem("favorites-list", JSON.stringify(list));
-      console.log(artistname);
+      //console.log(artistname);
       makeFavorites();
     };
 
@@ -101,8 +100,6 @@ if (!Array.isArray(list)) {
 
      });
 
-
-
      var follow = '<iframe src="https://embed.spotify.com/follow/1/?uri=spotify:artist:'
      + artistID + '&size=basic&theme=light" swidth="200" height="25" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>'
      $('#profile').append("<br>" + follow); 
@@ -115,42 +112,6 @@ if (!Array.isArray(list)) {
   $("#artist-input").on("click", function() {
   this.value = "";
 });
-
-
-function getTwitter(artist) {
-
-    // Running an initial search to identify the artist's unique Spotify id
-     // artist = artist.replace(" ", "+");
- var queryURL3 = "http://aamirafridi.com/twitter/?q=beyonce&result_type=popular&filter:verified&lang=en"; 
-    
-    $.ajax({
-      url: queryURL3,
-      method: "GET"
-    }).done(function(response) {
-      console.log(response);
-
-      var results = response.statuses;
-
-      for (var i = 0; i < 5; i++) {
-     
-      var tweet = results[i].text;
-      var url = results[i].source;
-      var individualResultDiv = $("<a>");
-
-      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
-      individualResultDiv.append(tweet);
-
-
-      individualResultDiv.addClass(".individualResult");
-        $("#lyrics").append(individualResultDiv);
-        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
-
-
-      }
-
-    });
-
-  }; 
 
 //giphy function/////////////////////////////////////////////////////////////////////////
 //         function getGiphy() {
@@ -206,7 +167,7 @@ function getTwitter(artist) {
 
       var results = response.events.event
 
-      console.log(results);
+      //console.log(results);
 
       // Printing the entire object to console
       for (var i = 0; i < results.length; i++) {
@@ -237,40 +198,28 @@ function getTwitter(artist) {
 
 
 //Submit Button runs all AJAX functions 
-  $(document).on("click","#submit", function(submit) {
+  $("#submit").on("click", function(submit) {
     submit.preventDefault();
-    $("#lyrics").empty();
     $("#player").empty();
     $("#profile").empty();
     $("#dates").empty();
-    
     $("#spotify-header").html("Top Songs");
     $("#tour-header").html("Upcoming Shows");
     var artist = $("#artist-input").val().toLowerCase().trim();
-    console.log(artist);
+    //console.log(artist);
     getArtistTrack(artist);
     getEvents(artist);
-    getTwitter(artist);
-
-
-    //var src = "https://www.songlyrics.com";
-    //dynamically add iframe
-    //$('<iframe>').attr("src", src).attr("height",300).attr("width",300).appendTo('#lyrics');
+    getTwitter(artist)
     // getGiphy();
 
  $(document).on("click", ".favorite-button", function(){
-    event.preventDefault();
-    $("#lyrics").empty();
+     event.preventDefault();
     $("#player").empty();
     console.log("1");
     $("#profile").empty();
     console.log("2");
     $("#dates").empty();
     console.log("3");
-    //dynamically add iframe
-    var src = "https://www.songlyrics.com/";
-  	$('<iframe>').attr("src", src).attr("height",500).attr("width",500).appendTo('#lyrics');
-    //
     $("#spotify-header").html("Top Songs");
     console.log("4");
     $("#tour-header").html("Upcoming Shows");
@@ -294,6 +243,83 @@ function getTwitter(artist) {
 
 });
 
+  function getEvents(artist) {
+
+    // Running an initial search to identify the artist's unique Spotify id
+     // artist = artist.replace(" ", "+");
+     var queryURL2 = "https://api.eventful.com/json/events/search?keywords=" + artist + "+music&where=34.0522,-118.2437&within=25&sort_order=popularity&date=Future&app_key=6Gn8mQPcGM5pV65S";
+    
+    $.ajax({
+      url: queryURL2,
+      dataType: 'jsonp',
+      method: "GET"
+    }).done(function(response) {
+
+      var results = response.events.event
+
+      //console.log(results);
+
+      // Printing the entire object to console
+      for (var i = 0; i < results.length; i++) {
+     
+      var printout = results[i].title;
+      var date = results[i].start_time;
+      var dateformatted =  moment(date).format('MMMM Do YYYY, h:mm a');
+      var name = results[i].venue_name;
+      var address = results[i].venue_address;
+      var url = results[i].url
+      var individualResultDiv = $("<a>");
+
+      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+      individualResultDiv.append(printout)
+      individualResultDiv.append(" / " + name)
+      individualResultDiv.append(" / " + address)
+      individualResultDiv.append(" / " + dateformatted + "</p>")
+      individualResultDiv.addClass(".individualResult");
+      individualResultDiv.attr("href", url)
+        $("#dates").append(individualResultDiv)
+        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+
+      }
+
+    });
+
+  };
+
+  function getTwitter(artist) {
+
+    // Running an initial search to identify the artist's unique Spotify id
+     // artist = artist.replace(" ", "+");
+ var queryURL3 = "http://aamirafridi.com/twitter/?q=" + artist + "&result_type=popular&filter:verified&lang=en"; 
+    
+    $.ajax({
+      url: queryURL3,
+      method: "GET"
+    }).done(function(response) {
+      console.log(response);
+
+      var results = response.statuses;
+
+      for (var i = 0; i < 5; i++) {
+     
+      var tweet = results[i].text;
+      var url = results[i].source;
+      var individualResultDiv = $("<a>");
+
+      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+      individualResultDiv.append(tweet);
+
+
+      individualResultDiv.addClass(".individualResult");
+        $("#feed").append(individualResultDiv);
+        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+
+
+      }
+
+    });
+
+  };   
+
+
 });
-
-
