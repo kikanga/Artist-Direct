@@ -1,10 +1,25 @@
 body {
 	background: url("http://cinemacgyver.com/wp-content/uploads/2016/10/b5dKUl.jpg");
+	background-repeat: no-repeat;
+	background-color: black;
 	font-family: 'Open Sans', sans-serif;
 }
 
 *:focus {
     outline: none;
+}
+
+.heart {
+	font-size: 28px;
+	color: red;
+}
+
+button {
+	background-color: rgba(0, 0 , 0, 0);
+	border: none;
+	font-size: 30px;
+	padding-right: 20px;
+
 }
 
 .pic, .tweets, .tour {
@@ -14,10 +29,34 @@ body {
 
 }
 
+.tour {
+	padding: 70px;
+
+
+}
+
+.pic {
+	padding-left: 30px;
+	padding-top: 30px;
+}
+
+.dates {
+
+	padding: 30px;
+
+}
 #spotify-header {
 
 	font-size: 24px;
 	text-align: center;
+}
+
+#tour-header {
+
+	font-size: 24px;
+	text-align: center;
+	color: white;
+	
 }
 
 .spotify {
@@ -69,3 +108,47 @@ iframe {
 	float: right;
 	
 }
+
+.footer {
+	width: 100%;
+	text-align: center;
+	height: 150px;
+	padding-top: 30px;
+
+}
+
+@media only screen and (max-width: 768px) {
+	.searchbar {
+    	position: absolute;
+    	top: 0px;
+    	margin-left: auto;
+    	width: 100%;
+}
+
+.pic {
+	padding-left: 30px;
+	padding-top: 30px;
+	margin-top: 100px;
+}
+
+}
+
+
+@media only screen and (max-width: 640px) {
+
+    .searchbar {
+    	position: absolute;
+    	top: 0px;
+    	margin-left: auto;
+    	margin-right: auto;
+        
+    }
+
+    body {
+    	background: black;
+    }
+}
+
+
+
+
