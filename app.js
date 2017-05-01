@@ -38,7 +38,7 @@ if (!Array.isArray(list)) {
       if (list.indexOf(artistname) == -1) {
       list.push(artistname);
       localStorage.setItem("favorites-list", JSON.stringify(list));
-      console.log(artistname);
+      //console.log(artistname);
       makeFavorites();
     };
 
@@ -168,7 +168,7 @@ if (!Array.isArray(list)) {
 
       var results = response.events.event
 
-      console.log(results);
+      //console.log(results);
 
       // Printing the entire object to console
       for (var i = 0; i < results.length; i++) {
@@ -207,9 +207,10 @@ if (!Array.isArray(list)) {
     $("#spotify-header").html("Top Songs");
     $("#tour-header").html("Upcoming Shows");
     var artist = $("#artist-input").val().toLowerCase().trim();
-    console.log(artist);
+    //console.log(artist);
     getArtistTrack(artist);
     getEvents(artist);
+    getTwitter(artist)
     // getGiphy();
 
  $(document).on("click", ".favorite-button", function(){
@@ -242,6 +243,95 @@ if (!Array.isArray(list)) {
   }); 
 
 });
+
+  function getEvents(artist) {
+
+    // Running an initial search to identify the artist's unique Spotify id
+     // artist = artist.replace(" ", "+");
+     var queryURL2 = "https://api.eventful.com/json/events/search?keywords=" + artist + "+music&where=34.0522,-118.2437&within=25&sort_order=popularity&date=Future&app_key=6Gn8mQPcGM5pV65S";
+    
+    $.ajax({
+      url: queryURL2,
+      dataType: 'jsonp',
+      method: "GET"
+    }).done(function(response) {
+
+      var results = response.events.event
+
+      //console.log(results);
+
+      // Printing the entire object to console
+      for (var i = 0; i < results.length; i++) {
+     
+      var printout = results[i].title;
+      var date = results[i].start_time;
+      var dateformatted =  moment(date).format('MMMM Do YYYY, h:mm a');
+      var name = results[i].venue_name;
+      var address = results[i].venue_address;
+      var url = results[i].url
+      var individualResultDiv = $("<a>");
+
+      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+      individualResultDiv.append(printout);
+      individualResultDiv.append(" / " + name);
+      individualResultDiv.append(" / " + address);
+      individualResultDiv.append(" / " + dateformatted + "</p>");
+      individualResultDiv.addClass(".individualResult");
+      individualResultDiv.attr("href", url);
+        $("#dates").append(individualResultDiv);
+        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+
+      }
+
+    });
+
+  };
+
+  function getTwitter(artist) {
+
+    // Running an initial search to identify the artist's unique Spotify id
+     // artist = artist.replace(" ", "+");
+ var queryURL3 = "http://aamirafridi.com/twitter/?q=" + artist + "&result_type=popular&filter:verified&lang=en";; 
+    
+    $.ajax({
+      url: queryURL3,
+      method: "GET"
+    }).done(function(response) {
+      console.log(response);
+
+      var results = response.statuses
+
+      for (var i = 0; i < 5; i++) {
+     
+      var tweet = results[i].text;
+      var url = results[i].entities.media[0].expanded_url;
+      var individualResultDiv = $("<a>");
+
+      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+      individualResultDiv.append(tweet + "<br> <br>");
+
+      individualResultDiv.attr("href", url);
+      individualResultDiv.addClass(".individualResult");
+        $("#feed").append(individualResultDiv);
+        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
+
+
+
+
+
+
+
+
+
+
+
+
+      }
+
+    });
+
+  };   
+
 
 });
 
