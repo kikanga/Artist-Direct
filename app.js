@@ -302,9 +302,9 @@ if (!Array.isArray(list)) {
       var results = response.statuses
 
       for (var i = 0; i < 5; i++) {
-     
+      //console.log('loop ' + i + 'results[' + i + ']' + results[i] )
       var tweet = results[i].text;
-      var url = results[i].entities.media[0].expanded_url;
+      var url = "https://twitter.com/" + results[i].user.screen_name + "/status/" + results[i].id_str;
       var individualResultDiv = $("<a>");
 
       // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
@@ -314,17 +314,6 @@ if (!Array.isArray(list)) {
       individualResultDiv.addClass(".individualResult");
         $("#feed").append(individualResultDiv);
         //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
-
-
-
-
-
-
-
-
-
-
-
 
       }
 
