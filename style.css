@@ -29,6 +29,7 @@ button {
 
 }
 
+
 .tour {
 	padding: 70px;
 
@@ -36,8 +37,10 @@ button {
 }
 
 .pic {
-	padding-left: 30px;
+	padding-left: 100px;
 	padding-top: 30px;
+
+ 	margin: 0 auto;
 }
 
 .dates {
@@ -51,7 +54,7 @@ button {
 	text-align: center;
 }
 
-#tour-header {
+#tour-header, #tweets-header {
 
 	font-size: 24px;
 	text-align: center;
@@ -75,17 +78,20 @@ button {
 }
 
 #artist-input {
-	background-color: rgba(0, 0 , 0, 0);
+	background-color: rgba(7, 7, 7, 0);
 	border: none;
 	height: 60px;
 	width: 100%;
 	text-align: center;
 	font-size: 40px;
 	font-family: 'Lato', sans-serif;
-
-
+	color: white;
 	
 
+}
+
+input::placeholder {
+	color: white;
 }
 
 #submit {
@@ -106,8 +112,8 @@ iframe {
 
 #profile {
 	float: right;
-	
 }
+
 
 .footer {
 	width: 100%;
@@ -117,10 +123,22 @@ iframe {
 
 }
 
+#feed {
+	padding: 70px;
+
+}
+
+.tweets {
+	padding-top: 70px;
+}
+
+.faves {
+	padding-top: 30px;
+}
 @media only screen and (max-width: 768px) {
 	.searchbar {
     	position: absolute;
-    	top: 0px;
+    	top: 75px;
     	margin-left: auto;
     	width: 100%;
 }
@@ -128,7 +146,7 @@ iframe {
 .pic {
 	padding-left: 30px;
 	padding-top: 30px;
-	margin-top: 100px;
+	margin-top: 190px;
 }
 
 }
@@ -138,14 +156,29 @@ iframe {
 
     .searchbar {
     	position: absolute;
-    	top: 0px;
+    	top: 75px;
     	margin-left: auto;
     	margin-right: auto;
         
     }
 
+    #profile {
+    	padding-bottom: 30px;
+    	margin: 0 auto;
+    }
+
+
+    #photo {
+    padding-left: 60px;
+
+    }
+
     body {
     	background: black;
+    }
+
+    #player {
+    	padding-left: 30px;
     }
 }
 
