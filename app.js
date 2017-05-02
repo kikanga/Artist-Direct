@@ -163,7 +163,7 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
      }).done(function(response){
       console.log("below is what");
       console.log(response);
-      $("#feed").append("<h2 style='color:white;'>Related Artist</h2>");
+      $("#feed").append("<h1 style='color:white; text-decoration: underline;'>Related Artist</h1>");
       $("#feed").append("<h3 style='color:white;'>"+response.artists[0].name+"</h3>");
       $("#feed").append("<h3 style='color:white;'>"+response.artists[1].name+"</h3>");
       $("#feed").append("<h3 style='color:white;'>"+response.artists[2].name+"</h3>");
