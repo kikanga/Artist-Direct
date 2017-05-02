@@ -1,74 +1,4 @@
-body {
-	background: url("http://cinemacgyver.com/wp-content/uploads/2016/10/b5dKUl.jpg");
-	font-family: 'Open Sans', sans-serif;
-}
 
-*:focus {
-    outline: none;
-}
-
-.pic, .tweets, .tour {
-
-	height: 300px;
-
-
-}
-
-#spotify-header {
-
-	font-size: 24px;
-	text-align: center;
-}
-
-.spotify {
- width: xpx;
- margin: 0 auto;
-}
-
-
-
-
-.search {
-	height: 150px;
-	text-align: center;
-	z-index: 1;
-
-}
-
-#artist-input {
-	background-color: rgba(0, 0 , 0, 0);
-	border: none;
-	height: 60px;
-	width: 100%;
-	text-align: center;
-	font-size: 40px;
-	font-family: 'Lato', sans-serif;
-
-
-	
-
-}
-
-#submit {
-	background-color: rgba(0, 0 , 0, 0);
-	border: none;
-	font-size: 20px;
-
-}
-
-iframe {
-	height: 75px;
-	
-}
-
-#player {
-	float: left;
-}
-
-#profile {
-	float: right;
-	
-}
 
 
 #registerForm {
@@ -93,16 +23,6 @@ iframe {
     border: none;
 }
 
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-    span.psw {
-       display: block;
-       float: none;
-    }
-    .cancelbtn {
-       width: 100%;
-    }
-}
 
 
 
