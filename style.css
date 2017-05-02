@@ -157,6 +157,12 @@ padding-left: 30px;
 
 
 @media only screen and (max-width: 768px) {
+	
+	#artist-input {
+		color: black;
+	}
+
+
 	.searchbar {
     	position: absolute;
     	top: 75px;
@@ -170,6 +176,31 @@ padding-left: 30px;
 	margin-top: 190px;
 }
 
+.tour {
+
+    	margin-top: 300px;
+    	
+    }
+
+ #bio {
+ 	float: right;
+ 	margin-top: -200px;
+ 	background-color: rgba(7, 7, 7, .7);
+ 	border-style: solid;
+ 	border-color: rgba(7, 7, 7, 0);
+ 	border-radius: 6px;
+ 	padding: 20px;
+
+ }
+
+.pic {
+	color: black;
+}
+
+h1, h3 {
+	color: black;
+}
+
 }
 
 
@@ -180,7 +211,12 @@ padding-left: 30px;
     	top: 75px;
     	margin-left: auto;
     	margin-right: auto;
+    	width: 100%;
         
+    }
+
+    #artist-input {
+    	width: 100%;
     }
 
     #profile {
@@ -194,12 +230,16 @@ padding-left: 30px;
 
 
     #photo {
-    padding-left: 60px;
+    padding-left: 50px;
 
     }
 
     #bio {
     	text-align: center;
+    	float: left; 
+    	padding-left: 25px;
+    	margin-top: 40px;
+    	background-color: black;
     }
 
 
@@ -209,6 +249,11 @@ padding-left: 30px;
 
     #player {
     	padding-left: 30px;
+    }
+
+    .tour {
+
+    	margin-top: 400px;
     }
 }
 
