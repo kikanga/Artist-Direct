@@ -25,6 +25,7 @@
     database.ref().push({
       Email:  email,
       Password: pass,
+      Favorites: [],
   });
     // clear text-boxes
     $("#userEmail").val("");
