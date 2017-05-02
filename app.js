@@ -1,5 +1,10 @@
-
 $(document).ready(function() {
+
+
+twttr.widgets.load(
+  document.getElementById("feed")
+);
+
 
 var artist = $("#artist-input").val().toLowerCase().trim();
 
@@ -211,6 +216,7 @@ if (!Array.isArray(list)) {
     getArtistTrack(artist);
     getEvents(artist);
     getTwitter(artist)
+    twttr.widgets.load()
     // getGiphy();
 
  $(document).on("click", ".favorite-button", function(){
@@ -288,42 +294,27 @@ if (!Array.isArray(list)) {
   };
 
   function getTwitter(artist) {
+    artist = artist.replace(" ", "");
+  var url =  "https://twitter.com/" + artist;
 
-    // Running an initial search to identify the artist's unique Spotify id
-     // artist = artist.replace(" ", "+");
- var queryURL3 = "http://aamirafridi.com/twitter/?q=" + artist + "&result_type=popular&filter:verified&lang=en";; 
-    
-    $.ajax({
-      url: queryURL3,
-      method: "GET"
-    }).done(function(response) {
-      console.log(response);
+      var individualResultDiv2 = $("<a>");
+      individualResultDiv2.addClass("twitter-timeline");
+      individualResultDiv2.attr("data-lang", "en");
+      individualResultDiv2.attr("data-height", "500");
+      individualResultDiv2.attr("data-theme", "dark");
+      individualResultDiv2.attr("href", url);
 
-      var results = response.statuses
+      
+      //individualResultDiv.addClass(".individualResult");
 
-      for (var i = 0; i < 5; i++) {
-      //console.log('loop ' + i + 'results[' + i + ']' + results[i] )
-      var tweet = results[i].text;
-      var url = "https://twitter.com/" + results[i].user.screen_name + "/status/" + results[i].id_str;
-      var individualResultDiv = $("<a>");
-
-      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
-      individualResultDiv.append(tweet + "<br> <br>");
-
-      individualResultDiv.attr("href", url);
-      individualResultDiv.addClass(".individualResult");
-        $("#feed").append(individualResultDiv);
+         $("#feed").append(individualResultDiv2);
         //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
 
-      }
 
-    });
-
-  };   
-
+      
+    };
 
 });
-
 
 
 
