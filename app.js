@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+twttr.widgets.load(
+  document.getElementById("feed"));
 
  
 var list = JSON.parse(localStorage.getItem("favorites-list"));
@@ -23,6 +25,7 @@ makeFavorites();
     $("#player").empty();
     $("#profile").empty();
     $("#dates").empty();
+    $("#bio").empty();
     $("#spotify-header").html("Top Songs");
     $("#tour-header").html("Upcoming Shows");
     $("#tweets-header").html("Trending Tweets");
@@ -30,6 +33,7 @@ makeFavorites();
     getArtistTrack(artist);
     getEvents(artist);
     getTwitter(artist)
+    twttr.widgets.load();
   
 
 
@@ -45,6 +49,8 @@ makeFavorites();
     
     $("#dates").empty();
     
+    $("#bio").empty();
+
     $("#spotify-header").html("Top Songs");
     
     $("#tour-header").html("Upcoming Shows");
@@ -58,6 +64,10 @@ makeFavorites();
     getArtistTrack(artist);
     
     getEvents(artist);
+
+    getTwitter(artist);
+
+    twttr.widgets.load();
 
   }); 
 
@@ -163,10 +173,10 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
      }).done(function(response){
       console.log("below is what");
       console.log(response);
-      $("#feed").append("<h1 style='color:white; text-decoration: underline;'>Related Artist</h1>");
-      $("#feed").append("<h3 style='color:white;'>"+response.artists[0].name+"</h3>");
-      $("#feed").append("<h3 style='color:white;'>"+response.artists[1].name+"</h3>");
-      $("#feed").append("<h3 style='color:white;'>"+response.artists[2].name+"</h3>");
+      $("#bio").append("<h1 style='color:white; text-decoration: underline;'>Related Artists</h1>");
+      $("#bio").append("<h3 style='color:white;'>"+response.artists[0].name+"</h3>");
+      $("#bio").append("<h3 style='color:white;'>"+response.artists[1].name+"</h3>");
+      $("#bio").append("<h3 style='color:white;'>"+response.artists[2].name+"</h3>");
      });
 
     });
@@ -219,63 +229,19 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
 //Twitter AJAX grabs trending tweets for artist
   function getTwitter(artist) {
 
- var queryURL3 = "https://aamirafridi.com/twitter/?q=" + artist + "&result_type=popular&filter:verified&lang=en";; 
-    
-    $.ajax({
-      url: queryURL3,
-      method: "GET"
-    }).done(function(response) {
-      console.log(response);
-      var results = response.statuses
-      for (var i = 0; i < 5; i++) {
-      var tweet = results[i].text;
-      var url = "https://twitter.com/" + results[i].user.screen_name + "/status/" + results[i].id_str;
-      var individualResultDiv = $("<a>");
-      individualResultDiv.append(tweet + "<br> <br>");
-      individualResultDiv.attr("href", url);
-      individualResultDiv.addClass(".individualResult");
-      $("#feed").append(individualResultDiv);
+    artist = artist.replace(/ /g, "");
+    var url = "https://twitter.com/" + artist;
+    console.log(url)
+    var individualResultDiv2 = $("<a>");
+    individualResultDiv2.addClass("twitter-timeline");
+    individualResultDiv2.attr("data-lang", "en");
+    individualResultDiv2.attr("data-height", "300");
+    individualResultDiv2.attr("data-width", "500");
+    individualResultDiv2.attr("data-theme", "dark");
+    individualResultDiv2.attr("href", url);
 
-      }
-
-    });
-
-  };   
+    $("#feed").html(individualResultDiv2);
 
 
-  function getTwitter(artist) {
-
-    // Running an initial search to identify the artist's unique Spotify id
-     // artist = artist.replace(" ", "+");
- var queryURL3 = "http://aamirafridi.com/twitter/?q=" + artist + "&result_type=popular&filter:verified&lang=en";; 
-    
-    $.ajax({
-      url: queryURL3,
-      method: "GET"
-    }).done(function(response) {
-      console.log(response);
-
-      var results = response.statuses
-
-      for (var i = 0; i < 5; i++) {
-      //console.log('loop ' + i + 'results[' + i + ']' + results[i] )
-      var tweet = results[i].text;
-      var url = "https://twitter.com/" + results[i].user.screen_name + "/status/" + results[i].id_str;
-      var individualResultDiv = $("<a>");
-
-      // individualResultDiv.append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
-      individualResultDiv.append(tweet + "<br> <br>");
-
-      individualResultDiv.attr("href", url);
-      individualResultDiv.addClass(".individualResult");
-        $("#feed").append(individualResultDiv);
-        //$(".fill").append('<p>' + printout + '    ' + name + '    ' + address + '    ' + date + '</p>');
-
-      }
-
-    });
-
-  };   
-
-
+  };
 });
