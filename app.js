@@ -106,13 +106,13 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
 
     $("#player").empty();
     $("#profile").empty();
-
+    var artistID;
     var queryURL = "https://api.spotify.com/v1/search?q=" + artist + "&type=artist";
     $.ajax({
       url: queryURL,
       method: "GET"
     }).done(function(response) {
-      var artistID = response.artists.items[0].id;
+      artistID = response.artists.items[0].id;
       var queryURLTracks = "https://api.spotify.com/v1/artists/" + artistID + "/top-tracks?country=US";
       $.ajax({
         url: queryURLTracks,
@@ -154,6 +154,20 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
      var follow = '<iframe src="https://embed.spotify.com/follow/1/?uri=spotify:artist:'
      + artistID + '&size=basic&theme=light" swidth="200" height="25" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>'
      $('#profile').append("<br>" + follow); 
+
+     //code below gets related artist and appends it to the related artist section. 
+     var queryRelatedArtist = "https://api.spotify.com/v1/artists/"+artistID+"/related-artists";
+     $.ajax({
+      url: queryRelatedArtist,
+      method:"get"
+     }).done(function(response){
+      console.log("below is what");
+      console.log(response);
+      $("#feed").append("<h2 style='color:white;'>Related Artist</h2>");
+      $("#feed").append("<h3 style='color:white;'>"+response.artists[0].name+"</h3>");
+      $("#feed").append("<h3 style='color:white;'>"+response.artists[1].name+"</h3>");
+      $("#feed").append("<h3 style='color:white;'>"+response.artists[2].name+"</h3>");
+     });
 
     });
   }
