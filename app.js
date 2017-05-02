@@ -174,9 +174,9 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
       console.log(response);
       $("#bio").append("<h1 style='color:white; text-decoration: underline;'>Related Artists</h1>");
 
-      $("#bio").append("<h3 style='color:white;' class='favorite-button'>"+response.artists[0].name+"</h3>");
-      $("#bio").append("<h3 style='color:white;' class='favorite-button'>"+response.artists[1].name+"</h3>");
-      $("#bio").append("<h3 style='color:white;' class='favorite-button'>"+response.artists[2].name+"</h3>");
+      $("#bio").append("<h3 style='color:white; text-decoration:underline; z-index:1;' class='favorite-button'>"+response.artists[0].name+"</h3>");
+      $("#bio").append("<h3 style='color:white; text-decoration:underline; z-index:1;' class='favorite-button'>"+response.artists[1].name+"</h3>");
+      $("#bio").append("<h3 style='color:white; text-decoration:underline; z-index:1;' class='favorite-button'>"+response.artists[2].name+"</h3>");
      });
 
     });
