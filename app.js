@@ -1,8 +1,44 @@
-$(document).ready(function() {
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyD4LgBgSHu3JzZKRNRCS8biqa0nzm7NSWQ",
+    authDomain: "group-project-1-ad.firebaseapp.com",
+    databaseURL: "https://group-project-1-ad.firebaseio.com",
+    projectId: "group-project-1-ad",
+    storageBucket: "group-project-1-ad.appspot.com",
+    messagingSenderId: "5994213766"
+  };
+  firebase.initializeApp(config);
+var database = firebase.database();
+  $(document).ready(function() {
+  $('#register').on("click", function(){
+
+  event.preventDefault();
+
+
+        var email = $('#userEmail').val().trim();
+        var pass = $('#userPass').val().trim();
+
+      console.log(email);
+      console.log(pass);
+
+    database.ref().push({
+      Email:  email,
+      Password: pass,
+      Favorites: [],
+  });
+    // clear text-boxes
+    $("#userEmail").val("");
+    $("#userPass").val("");
+    // Prevents page from refreshing
+    return false;   
+    $("#registerForm").remove();
+  });
 
 twttr.widgets.load(
   document.getElementById("feed"));
-
+var artist = $("#artist-input").val().toLowerCase().trim();
+console.log(artist);
+//Favorites List/////////////////////////////////////////////////////////////////// 
  
 var list = JSON.parse(localStorage.getItem("favorites-list"));
   //if there is a list, it displays it 
@@ -75,6 +111,8 @@ $(document).on('click', 'a', function(e){
 
     twttr.widgets.load();
 
+    $("#registerForm").remove();
+
   }); 
 
 
@@ -123,6 +161,7 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
     $("#player").empty();
     $("#profile").empty();
     var artistID;
+
     var queryURL = "https://api.spotify.com/v1/search?q=" + artist + "&type=artist";
     $.ajax({
       url: queryURL,
@@ -143,14 +182,13 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
         var player3 = "<iframe src='https://embed.spotify.com/?uri=spotify:track:" +
           trackResponse.tracks[2].id +
           "' frameborder='0' allowtransparency='true'></iframe>";
-
         $("#player").append("<br>" + player1);
         $("#player").append("<br>" + player2);
         $("#player").append("<br>" + player3);
-
       });
       var queryGenre = "https://api.spotify.com/v1/artists/" + artistID;
      $.ajax({
+
       url: queryGenre,
       method: "GET"
      }).done(function(genreResponse) {
@@ -201,11 +239,11 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
       method: "GET"
     }).done(function(response) {
 
+
       var results = response.events.event
     
 
       // Printing the entire object to console
-
 
       for (var i = 0; i < results.length; i++) {
      
@@ -217,18 +255,30 @@ var artistname = $("#artist-input").val().toLowerCase().trim();
       var url = results[i].url
       var individualResultDiv = $("<a>");
 
-     
       individualResultDiv.append(printout)
       individualResultDiv.append(" / " + name)
       individualResultDiv.append(" / " + address)
       individualResultDiv.append(" / " + dateformatted + "</p>")
       individualResultDiv.addClass(".individualResult");
       individualResultDiv.attr("href", url)
-     $("#dates").append(individualResultDiv)
 
+     $("#dates").append(individualResultDiv)
       }
 
     });
+  };
+  function getTwitter(artist) {
+    artist = artist.replace(" ", "");
+  var url =  "https://twitter.com/" + artist;
+      var individualResultDiv2 = $("<a>");
+      individualResultDiv2.addClass("twitter-timeline");
+      individualResultDiv2.attr("data-lang", "en");
+      individualResultDiv2.attr("data-height", "500");
+      individualResultDiv2.attr("data-theme", "dark");
+      individualResultDiv2.attr("href", url);
+      
+      //individualResultDiv.addClass(".individualResult");
+  $("#feed").append(individualResultDiv2);
 
   }; 
   
