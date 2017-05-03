@@ -15,7 +15,7 @@ body {
 	color: red;
 }
 
-button {
+#submit, .favorite-button {
 	background-color: rgba(0, 0 , 0, 0);
 	border: none;
 	font-size: 30px;
@@ -226,12 +226,13 @@ h1, h3 {
     }
 
     .spotify {
-    	margin-top: 200px;
+    	margin-top: 210px;
     }
 
 
     #photo {
     padding-left: 50px;
+    width: 100%;
 
     }
 
